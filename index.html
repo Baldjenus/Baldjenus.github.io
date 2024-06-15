@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Puffing combat</title>
+    </head>
+    <body>
+        <p>Puffing Combat</p>
+        <p>Puff coins: <span id ="score">0</span></p>
+        <img src="puf.png" height="400" width="400" onclick="addToScore(1)">
+        <button onclick="buysodju()">Купить Соджу [<span id = "sodjucost">15</span>] -- текущее количество <span id = "sodjuamount">0</span></button>
+
+        <script>
+            var score = 0;
+            var sodjucost = 15;
+            var sodjuamount = 0;
+            
+            function addToScore(amount) {
+                score = score+amount;
+                document.getElementById("score").innerHTML = score;
+            }
+
+            function buysodju() {
+                if (score >= sodjucost){
+                    score = score-sodjucost;
+                    sodjuamount = sodjuamount+1;
+                    sodjucost = Math.round(sodjucost*1.15);
+                    document.getElementById("score").innerHTML = score;
+                    document.getElementById("sodjucost").innerHTML = sodjucost;
+                    document.getElementById("sodjuamount").innerHTML = sodjuamount;
+                }
+            }
+            setInterval(function(){
+                score = score+sodjuamount;
+                document.getElementById("score").innerHTML = score;
+            },1000)
+        </script>
+    </body>
+</html> 
