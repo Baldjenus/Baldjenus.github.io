@@ -46,7 +46,7 @@
         <div class="sectionLeft">
             <center>
                 <div class="scoreContainer">
-                    <span id ="score">0</span> Puff coins <br>
+                    <span id ="score">1</span> Puff coins <br>
                     <span id ="scorepersecond">0</span> Puff coins per second
                 </div>
                 <div class = pufcoin>
@@ -84,7 +84,7 @@
             </table>
         </div> 
         <script>
-            var score = 0;
+            var score = 1;
             var sodjucost = 15;
             var sodjuamount = 0;
             
@@ -112,30 +112,30 @@
             }
             function loadGame(){
                 var savedGame = JSON.parse(localStorage.getItem("gameSave"));
-                if(typeof savedGame.score != "undefined") scroe = saveGame.score;
-                if(typeof savedGame.scorepersecond != "undefined") scorepersecond = saveGame.scorepersecond;
-                if(typeof savedGame.sodjuamount != "undefined") sodjuamount = saveGame.sodjuamount;
-                if(typeof savedGame.sodjucost != "undefined") sodjucost = saveGame.sodjucost;
+                if(typeof savedGame.score !== "undefined") score = savedGame.score;
+                if(typeof savedGame.scorepersecond !== "undefined") scorepersecond = savedGame.scorepersecond;
+                if(typeof savedGame.sodjuamount !== "undefined") sodjuamount = savedGame.sodjuamount;
+                if(typeof savedGame.sodjucost !== "undefined") sodjucost = savedGame.sodjucost;
 
             }
 
             function saveGame(){
                 var gameSave = {
-                    score:score,
-                    scorepersecond:scorepersecond,
-                    sodjuamount:sodjuamount,
-                    sodjucost:sodjucost,
-
-
+                    score: score,
+                    scorepersecond: scorepersecond,
+                    sodjuamount: sodjuamount,
+                    sodjucost: sodjucost,
                 };
                 localStorage.setItem("gameSave",JSON.stringify(gameSave));
             }
+
             window.onload = function(){
                 loadGame();
                 updateScorePerSecond();
                 document.getElementById("score").innerHTML = score;
                 document.getElementById("sodjucost").innerHTML = sodjucost;
                 document.getElementById("sodjuamount").innerHTML = sodjuamount;
+
             }
             setInterval(function(){
                 score = score+sodjuamount;
