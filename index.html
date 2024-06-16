@@ -1,6 +1,8 @@
 <html>
     <head>
         <title>Puffing combat</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
         <style>
            .sectionLeft{
                 float:left;
@@ -22,8 +24,7 @@
                 position: relative;
                 transition: all .2s ease-in-out;
            }
-           .pufcoin img:hover{transform: scale(1.10);}
-           .pufcoin img:active{transform: scale(0.99);}
+ 
            .shopButton{
                 background-color: rgba(109, 109, 4, 0.795);
                 transition: all .2s ease-in-out;
@@ -110,6 +111,7 @@
                 document.getElementById("scorepersecond").innerHTML = scorepersecond;
 
             }
+            
             function loadGame(){
                 var savedGame = JSON.parse(localStorage.getItem("gameSave"));
                 if(typeof savedGame.score !== "undefined") score = savedGame.score;
@@ -142,6 +144,29 @@
                 document.getElementById("score").innerHTML = score;
                 saveGame()
             },1000)
+            document.addEventListener('DOMContentLoaded', function() {
+        var pufcoinImage = document.querySelector('.pufcoin img');
+
+        pufcoinImage.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.9)';
+            this.style.webkitTransform = 'scale(0.9)';
+        });
+
+        pufcoinImage.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+            this.style.webkitTransform = 'scale(1)';
+        });
+
+        pufcoinImage.addEventListener('mousedown', function() {
+            this.style.transform = 'scale(0.9)';
+            this.style.webkitTransform = 'scale(0.9)';
+        });
+
+        pufcoinImage.addEventListener('mouseup', function() {
+            this.style.transform = 'scale(1)';
+            this.style.webkitTransform = 'scale(1)';
+        });
+    });
         </script>
     </body>
 </html> 
