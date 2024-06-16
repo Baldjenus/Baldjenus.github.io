@@ -1,13 +1,88 @@
 <html>
     <head>
         <title>Puffing combat</title>
+        <style>
+           .sectionLeft{
+                float:left;
+                width: 80%;
+           }
+           .sectionRight{
+                float:right;
+                width: 20%;
+           }
+           .scoreContainer{
+                background-color: rgba(109, 109, 4, 0.795);
+                width: 50%;
+                padding: 10px;
+                border-radius: 10px;
+                font-size: 25px;
+                font-weight: bold;
+           }
+           .pufcoin img{
+                position: relative;
+                transition: all .2s ease-in-out;
+           }
+           .pufcoin img:hover{transform: scale(1.10);}
+           .pufcoin img:active{transform: scale(0.99);}
+           .shopButton{
+                background-color: rgba(109, 109, 4, 0.795);
+                transition: all .2s ease-in-out;
+                border-radius: 10px;
+                width: 100%;
+                margin: 10px 0px 10px 0px;
+           }
+           .shopButton #shopImage{
+                width: 25%;
+                border-color: black;
+                border: 5px;
+           }
+           .shopButton img{
+                width: 64px;
+                height: 64px;
+           }
+        </style>
     </head>
     <body>
-        <p>Puffing Combat</p>
-        <p>Puff coins: <span id ="score">0</span></p>
-        <img src="puf.png" height="400" width="400" onclick="addToScore(1)">
-        <button onclick="buysodju()">Купить Соджу [<span id = "sodjucost">15</span>] -- текущее количество <span id = "sodjuamount">0</span></button>
+        <div class="sectionLeft">
+            <center>
+                <div class="scoreContainer">
+                    <span id ="score">0</span> Puff coins <br>
+                    <span id ="scorepersecond">0</span> Puff coins per second
+                </div>
+                <div class = pufcoin>
+                    <img src="puf.png" height="400" width="400" onclick="addToScore(1)">
+                </div>
+            </center>
+        </div>
+        <div class="sectionRight">
+            <table class="shopButton">
+                <td id="shopImage"><img src="soju.png" onclick="buysodju()"></td>
+                <td id="nameAndCost">
+                    <span>Соджу - напиток богов</span><br>
+                    <span>Цена <span id = "sodjucost">15</span> </span><br>
+                    <span>Количество - <span id = "sodjuamount">0</span></span>
+                </td>
 
+            </table>
+            <table class="shopButton">
+                <td id="shopImage"><img src="soju.png" onclick="buysodju()"></td>
+                <td id="nameAndCost">
+                    <span>Соджу - напиток богов</span><br>
+                    <span>Цена <span id = "sodjucost">15</span> </span><br>
+                    <span>Количество - <span id = "sodjuamount">0</span></span>
+                </td>
+
+            </table>
+            <table class="shopButton">
+                <td id="shopImage"><img src="soju.png" onclick="buysodju()"></td>
+                <td id="nameAndCost">
+                    <span>Соджу - напиток богов</span><br>
+                    <span>Цена <span id = "sodjucost">15</span> </span><br>
+                    <span>Количество - <span id = "sodjuamount">0</span></span>
+                </td>
+
+            </table>
+        </div> 
         <script>
             var score = 0;
             var sodjucost = 15;
@@ -26,11 +101,46 @@
                     document.getElementById("score").innerHTML = score;
                     document.getElementById("sodjucost").innerHTML = sodjucost;
                     document.getElementById("sodjuamount").innerHTML = sodjuamount;
+                    updateScorePerSecond();
                 }
+            }
+
+            function updateScorePerSecond(){
+                scorepersecond = sodjuamount
+                document.getElementById("scorepersecond").innerHTML = scorepersecond;
+
+            }
+            function loadGame(){
+                var savedGame = JSON.parse(localStorage.getItem("gameSave"));
+                if(typeof savedGame.score != "undefined") scroe = saveGame.score;
+                if(typeof savedGame.scorepersecond != "undefined") scorepersecond = saveGame.scorepersecond;
+                if(typeof savedGame.sodjuamount != "undefined") sodjuamount = saveGame.sodjuamount;
+                if(typeof savedGame.sodjucost != "undefined") sodjucost = saveGame.sodjucost;
+
+            }
+
+            function saveGame(){
+                var gameSave = {
+                    score:score,
+                    scorepersecond:scorepersecond,
+                    sodjuamount:sodjuamount,
+                    sodjucost:sodjucost,
+
+
+                };
+                localStorage.setItem("gameSave",JSON.stringify(gameSave));
+            }
+            window.onload = function(){
+                loadGame();
+                updateScorePerSecond();
+                document.getElementById("score").innerHTML = score;
+                document.getElementById("sodjucost").innerHTML = sodjucost;
+                document.getElementById("sodjuamount").innerHTML = sodjuamount;
             }
             setInterval(function(){
                 score = score+sodjuamount;
                 document.getElementById("score").innerHTML = score;
+                saveGame()
             },1000)
         </script>
     </body>
