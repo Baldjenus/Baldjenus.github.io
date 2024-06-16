@@ -1,172 +1,205 @@
-<html>
-    <head>
-        <title>Puffing combat</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-        <style>
-           .sectionLeft{
-                float:left;
-                width: 80%;
-           }
-           .sectionRight{
-                float:right;
-                width: 20%;
-           }
-           .scoreContainer{
-                background-color: rgba(109, 109, 4, 0.795);
-                width: 50%;
-                padding: 10px;
-                border-radius: 10px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Puffing Combat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .sectionLeft, .sectionRight {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .scoreContainer {
+            background-color: rgba(109, 109, 4, 0.795);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .pufcoin img {
+            width: 100%;
+            max-width: 300px;
+            transition: all .2s ease-in-out;
+            -webkit-transition: all .2s ease-in-out;
+        }
+        .pufcoin img:hover {
+            transform: scale(1.10);
+            -webkit-transform: scale(1.10);
+        }
+        .pufcoin img:active {
+            transform: scale(0.99);
+            -webkit-transform: scale(0.99);
+        }
+        .shopButton {
+            background-color: rgba(109, 109, 4, 0.795);
+            transition: all .2s ease-in-out;
+            border-radius: 10px;
+            width: 100%;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .shopButton img {
+            width: 48px;
+            height: 48px;
+            margin-right: 10px;
+        }
+        @media (min-width: 768px) {
+            .sectionLeft {
+                float: left;
+                width: 70%;
+            }
+            .sectionRight {
+                float: right;
+                width: 30%;
+            }
+            .scoreContainer {
                 font-size: 25px;
-                font-weight: bold;
-           }
-           .pufcoin img{
-                position: relative;
-                transition: all .2s ease-in-out;
-           }
- 
-           .shopButton{
-                background-color: rgba(109, 109, 4, 0.795);
-                transition: all .2s ease-in-out;
-                border-radius: 10px;
-                width: 100%;
-                margin: 10px 0px 10px 0px;
-           }
-           .shopButton #shopImage{
-                width: 25%;
-                border-color: black;
-                border: 5px;
-           }
-           .shopButton img{
+            }
+            .shopButton img {
                 width: 64px;
                 height: 64px;
-           }
-        </style>
-    </head>
-    <body>
-        <div class="sectionLeft">
-            <center>
-                <div class="scoreContainer">
-                    <span id ="score">1</span> Puff coins <br>
-                    <span id ="scorepersecond">0</span> Puff coins per second
-                </div>
-                <div class = pufcoin>
-                    <img src="puf.png" height="400" width="400" onclick="addToScore(1)">
-                </div>
-            </center>
+            }
+            .pufcoin img {
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sectionLeft">
+        <center>
+            <div class="scoreContainer">
+                <span id="score">1</span> Puff coins<br>
+                <span id="scorepersecond">0</span> Puff coins per second
+            </div>
+            <div class="pufcoin">
+                <img src="puf.png" onclick="addToScore(1)">
+            </div>
+        </center>
+    </div>
+    <div class="sectionRight">
+        <div class="shopButton">
+            <img src="soju.png" onclick="buySodju()">
+            <div id="nameAndCost">
+                <span>Соджу - напиток богов</span><br>
+                <span>Цена <span id="sodjucost">15</span></span><br>
+                <span>Количество - <span id="sodjuamount">0</span></span>
+            </div>
         </div>
-        <div class="sectionRight">
-            <table class="shopButton">
-                <td id="shopImage"><img src="soju.png" onclick="buysodju()"></td>
-                <td id="nameAndCost">
-                    <span>Соджу - напиток богов</span><br>
-                    <span>Цена <span id = "sodjucost">15</span> </span><br>
-                    <span>Количество - <span id = "sodjuamount">0</span></span>
-                </td>
+        <div class="shopButton">
+            <img src="soju.png" onclick="buySodju()">
+            <div id="nameAndCost">
+                <span>Соджу - напиток богов</span><br>
+                <span>Цена <span id="sodjucost">15</span></span><br>
+                <span>Количество - <span id="sodjuamount">0</span></span>
+            </div>
+        </div>
+        <div class="shopButton">
+            <img src="soju.png" onclick="buySodju()">
+            <div id="nameAndCost">
+                <span>Соджу - напиток богов</span><br>
+                <span>Цена <span id="sodjucost">15</span></span><br>
+                <span>Количество - <span id="sodjuamount">0</span></span>
+            </div>
+        </div>
+    </div>
+    <script>
+        var score = 1;
+        var sodjucost = 15;
+        var sodjuamount = 0;
+        var scorepersecond = 0;
 
-            </table>
-            <table class="shopButton">
-                <td id="shopImage"><img src="soju.png" onclick="buysodju()"></td>
-                <td id="nameAndCost">
-                    <span>Соджу - напиток богов</span><br>
-                    <span>Цена <span id = "sodjucost">15</span> </span><br>
-                    <span>Количество - <span id = "sodjuamount">0</span></span>
-                </td>
+        function addToScore(amount) {
+            score += amount;
+            document.getElementById("score").innerHTML = score;
+        }
 
-            </table>
-            <table class="shopButton">
-                <td id="shopImage"><img src="soju.png" onclick="buysodju()"></td>
-                <td id="nameAndCost">
-                    <span>Соджу - напиток богов</span><br>
-                    <span>Цена <span id = "sodjucost">15</span> </span><br>
-                    <span>Количество - <span id = "sodjuamount">0</span></span>
-                </td>
-
-            </table>
-        </div> 
-        <script>
-            var score = 1;
-            var sodjucost = 15;
-            var sodjuamount = 0;
-            
-            function addToScore(amount) {
-                score = score+amount;
-                document.getElementById("score").innerHTML = score;
-            }
-
-            function buysodju() {
-                if (score >= sodjucost){
-                    score = score-sodjucost;
-                    sodjuamount = sodjuamount+1;
-                    sodjucost = Math.round(sodjucost*1.15);
-                    document.getElementById("score").innerHTML = score;
-                    document.getElementById("sodjucost").innerHTML = sodjucost;
-                    document.getElementById("sodjuamount").innerHTML = sodjuamount;
-                    updateScorePerSecond();
-                }
-            }
-
-            function updateScorePerSecond(){
-                scorepersecond = sodjuamount
-                document.getElementById("scorepersecond").innerHTML = scorepersecond;
-
-            }
-            
-            function loadGame(){
-                var savedGame = JSON.parse(localStorage.getItem("gameSave"));
-                if(typeof savedGame.score !== "undefined") score = savedGame.score;
-                if(typeof savedGame.scorepersecond !== "undefined") scorepersecond = savedGame.scorepersecond;
-                if(typeof savedGame.sodjuamount !== "undefined") sodjuamount = savedGame.sodjuamount;
-                if(typeof savedGame.sodjucost !== "undefined") sodjucost = savedGame.sodjucost;
-
-            }
-
-            function saveGame(){
-                var gameSave = {
-                    score: score,
-                    scorepersecond: scorepersecond,
-                    sodjuamount: sodjuamount,
-                    sodjucost: sodjucost,
-                };
-                localStorage.setItem("gameSave",JSON.stringify(gameSave));
-            }
-
-            window.onload = function(){
-                loadGame();
-                updateScorePerSecond();
+        function buySodju() {
+            if (score >= sodjucost) {
+                score -= sodjucost;
+                sodjuamount += 1;
+                sodjucost = Math.round(sodjucost * 1.15);
                 document.getElementById("score").innerHTML = score;
                 document.getElementById("sodjucost").innerHTML = sodjucost;
                 document.getElementById("sodjuamount").innerHTML = sodjuamount;
-
+                updateScorePerSecond();
             }
-            setInterval(function(){
-                score = score+sodjuamount;
-                document.getElementById("score").innerHTML = score;
-                saveGame()
-            },1000)
-            document.addEventListener('DOMContentLoaded', function() {
-        var pufcoinImage = document.querySelector('.pufcoin img');
+        }
 
-        pufcoinImage.addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.9)';
-            this.style.webkitTransform = 'scale(0.9)';
-        });
+        function updateScorePerSecond() {
+            scorepersecond = sodjuamount;
+            document.getElementById("scorepersecond").innerHTML = scorepersecond;
+        }
 
-        pufcoinImage.addEventListener('touchend', function() {
-            this.style.transform = 'scale(1)';
-            this.style.webkitTransform = 'scale(1)';
-        });
+        function loadGame() {
+            var savedGame = JSON.parse(localStorage.getItem("gameSave"));
+            if (savedGame) {
+                if (typeof savedGame.score !== "undefined") score = savedGame.score;
+                if (typeof savedGame.scorepersecond !== "undefined") scorepersecond = savedGame.scorepersecond;
+                if (typeof savedGame.sodjuamount !== "undefined") sodjuamount = savedGame.sodjuamount;
+                if (typeof savedGame.sodjucost !== "undefined") sodjucost = savedGame.sodjucost;
+            }
+        }
 
-        pufcoinImage.addEventListener('mousedown', function() {
-            this.style.transform = 'scale(0.9)';
-            this.style.webkitTransform = 'scale(0.9)';
-        });
+        function saveGame() {
+            var gameSave = {
+                score: score,
+                scorepersecond: scorepersecond,
+                sodjuamount: sodjuamount,
+                sodjucost: sodjucost,
+            };
+            localStorage.setItem("gameSave", JSON.stringify(gameSave));
+        }
 
-        pufcoinImage.addEventListener('mouseup', function() {
-            this.style.transform = 'scale(1)';
-            this.style.webkitTransform = 'scale(1)';
+        window.onload = function() {
+            loadGame();
+            updateScorePerSecond();
+            document.getElementById("score").innerHTML = score;
+            document.getElementById("sodjucost").innerHTML = sodjucost;
+            document.getElementById("sodjuamount").innerHTML = sodjuamount;
+        }
+
+        setInterval(function() {
+            score += sodjuamount;
+            document.getElementById("score").innerHTML = score;
+            saveGame();
+        }, 1000);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var pufcoinImage = document.querySelector('.pufcoin img');
+
+            pufcoinImage.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.9)';
+                this.style.webkitTransform = 'scale(0.9)';
+            });
+
+            pufcoinImage.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+                this.style.webkitTransform = 'scale(1)';
+            });
+
+            pufcoinImage.addEventListener('mousedown', function() {
+                this.style.transform = 'scale(0.9)';
+                this.style.webkitTransform = 'scale(0.9)';
+            });
+
+            pufcoinImage.addEventListener('mouseup', function() {
+                this.style.transform = 'scale(1)';
+                this.style.webkitTransform = 'scale(1)';
+            });
         });
-    });
-        </script>
-    </body>
-</html> 
+    </script>
+</body>
+</html>
