@@ -10,6 +10,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            background-image: url("back.jpg");
+            background-size: cover; /* Масштабирование фона для покрытия всей области просмотра */
+            background-position: center center; /* Центрирование фонового изображения */
+            
         }
         .sectionLeft, .sectionRight {
             width: 100%;
@@ -49,6 +53,7 @@
             align-items: center;
             padding: 10px;
             box-sizing: border-box;
+            
         }
         .shopButton img {
             width: 48px;
@@ -74,10 +79,12 @@
             .pufcoin img {
                 max-width: 400px;
             }
+          
         }
     </style>
 </head>
 <body>
+    
     <div class="sectionLeft">
         <center>
             <div class="scoreContainer">
@@ -99,31 +106,36 @@
             </div>
         </div>
         <div class="shopButton">
-            <img src="soju.png" onclick="buySodju()">
+            <img src="kfc.png" onclick="buyKFC()">
             <div id="nameAndCost">
-                <span>Соджу - напиток богов</span><br>
-                <span>Цена <span id="sodjucost">15</span></span><br>
-                <span>Количество - <span id="sodjuamount">0</span></span>
+                <span>Ведро острых крыльев - утром будет больно</span><br>
+                <span>Цена <span id="kfccost">500</span></span><br>
+                <span>Количество - <span id="kfcamount">0</span></span>
             </div>
         </div>
         <div class="shopButton">
-            <img src="soju.png" onclick="buySodju()">
+            <img src="cola.png" onclick="buyCola()">
             <div id="nameAndCost">
-                <span>Соджу - напиток богов</span><br>
-                <span>Цена <span id="sodjucost">15</span></span><br>
-                <span>Количество - <span id="sodjuamount">0</span></span>
+                <span>Кока-кола - утраченный дар</span><br>
+                <span>Цена <span id="colacost">1000</span></span><br>
+                <span>Количество - <span id="colaamount">0</span></span>
             </div>
         </div>
     </div>
     <script>
-        var score = 1;
+        var score = 10000;
         var sodjucost = 15;
         var sodjuamount = 0;
+        var kfccost = 500;
+        var kfcamount = 0;
+        var colacost = 1000;
+        var colaamount = 0;
         var scorepersecond = 0;
 
         function addToScore(amount) {
             score += amount;
             document.getElementById("score").innerHTML = score;
+            window.navigator.vibrate(200)
         }
 
         function buySodju() {
@@ -135,11 +147,34 @@
                 document.getElementById("sodjucost").innerHTML = sodjucost;
                 document.getElementById("sodjuamount").innerHTML = sodjuamount;
                 updateScorePerSecond();
+                
+            }
+        }
+        function buyKFC() {
+            if (score >= kfccost) {
+                score -= kfccost;
+                kfcamount += 1;
+                kfccost = Math.round(kfccost * 1.15);
+                document.getElementById("score").innerHTML = score;
+                document.getElementById("kfccost").innerHTML = kfccost;
+                document.getElementById("kfcamount").innerHTML = kfcamount;
+                updateScorePerSecond();
+            }
+        }
+        function buyCola() {
+            if (score >= colacost) {
+                score -= colacost;
+                colaamount += 1;
+                colacost = Math.round(colacost * 1.15);
+                document.getElementById("score").innerHTML = score;
+                document.getElementById("colacost").innerHTML = colacost;
+                document.getElementById("colaamount").innerHTML = colaamount;
+                updateScorePerSecond();
             }
         }
 
         function updateScorePerSecond() {
-            scorepersecond = sodjuamount;
+            scorepersecond = sodjuamount+(kfcamount*10)+(colaamount*30);
             document.getElementById("scorepersecond").innerHTML = scorepersecond;
         }
 
@@ -150,6 +185,10 @@
                 if (typeof savedGame.scorepersecond !== "undefined") scorepersecond = savedGame.scorepersecond;
                 if (typeof savedGame.sodjuamount !== "undefined") sodjuamount = savedGame.sodjuamount;
                 if (typeof savedGame.sodjucost !== "undefined") sodjucost = savedGame.sodjucost;
+                if (typeof savedGame.sodjuamount !== "undefined") kfcamount = savedGame.kfcamount;
+                if (typeof savedGame.sodjucost !== "undefined") kfccost = savedGame.kfccost;
+                if (typeof savedGame.sodjuamount !== "undefined") colaamount = savedGame.colaamount;
+                if (typeof savedGame.sodjucost !== "undefined") colacost = savedGame.colacost;
             }
         }
 
@@ -159,6 +198,11 @@
                 scorepersecond: scorepersecond,
                 sodjuamount: sodjuamount,
                 sodjucost: sodjucost,
+                kfcamount: kfcamount,
+                colaamount:colaamount,
+                kfccost:kfccost,
+                colacost:colacost
+
             };
             localStorage.setItem("gameSave", JSON.stringify(gameSave));
         }
@@ -169,6 +213,10 @@
             document.getElementById("score").innerHTML = score;
             document.getElementById("sodjucost").innerHTML = sodjucost;
             document.getElementById("sodjuamount").innerHTML = sodjuamount;
+            document.getElementById("kfccost").innerHTML = kfccost;
+            document.getElementById("kfcamount").innerHTML = kfcamount;
+            document.getElementById("colacost").innerHTML = colacost;
+            document.getElementById("colaamount").innerHTML = colaamount;
         }
 
         setInterval(function() {
