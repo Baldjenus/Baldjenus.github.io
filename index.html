@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Brainrot Simulator 3000</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      font-family: 'Impact', sans-serif;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overscroll-behavior: none;
+    }
+
+    .container {
+      width: 90vw;
+      max-width: 400px;
+      aspect-ratio: 9 / 16;
+      background: #111;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      touch-action: none;
+      user-select: none;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 12%;
+      animation: shake 0.3s infinite alternate;
+    }
+    
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 8px 12px;
+      border-radius: 15px;
+      font-size: min(5vw, 1.8rem);
+      color: white;
+      text-shadow: 2px 2px 5px black;
+      text-align: center;
+      max-width: 90%;
+      word-wrap: break-word;
+      transition: all 0.3s;
+    }
+
+    .iq {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      color: #0ff;
+      font-size: 1.5rem;
+      text-shadow: 2px 2px 5px black;
+      display: none;
+    }
+
+    @keyframes shake {
+      from { transform: rotate(-1deg); }
+      to { transform: rotate(1deg); }
+    }
+
+    .overlay-pop {
+      transform: scale(1.2) rotate(5deg) !important;
+      color: #ff00ff !important;
+      text-shadow: 0 0 10px #00ffff !important;
+    }
+
+    .effects {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .effect-glitch {
+      backdrop-filter: hue-rotate(50deg) contrast(1.3);
+      animation: glitch 0.1s infinite;
+    }
+
+    .effect-flicker {
+      background: rgba(255, 255, 255, 0.1);
+      animation: flicker 0.2s infinite alternate;
+    }
+
+    .effect-error {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: red;
+      font-size: 2rem;
+      font-weight: bold;
+      background: rgba(255, 0, 0, 0.15);
+      backdrop-filter: blur(5px);
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(2px, -2px); }
+      100% { transform: translate(-1px, 1px); }
+    }
+
+    @keyframes flicker {
+      from { opacity: 0.2; }
+      to { opacity: 0.6; }
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes particles {
+      from { opacity: 1; transform: translateY(0) scale(1); }
+      to { opacity: 0; transform: translateY(-100px) scale(3); }
+    }
+
+    #swipeHint {
+      position: fixed;
+      bottom: 20px;
+      color: #0ff;
+      font-size: 2rem;
+      animation: bounce 1s infinite;
+    }
+
+    #dementiaCounter {
+      position: fixed;
+      top: 10px;
+      left: 15px;
+      color: #ff00ff;
+      font-size: 1.5rem;
+      text-shadow: 0 0 10px #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" onclick="handleClick()">
+    <div id="card" class="card">
+      <div class="overlay" id="text">КЛИКНИ ЧТОБЫ ЗАПУСТИТЬ BRAINROT.EXE</div>
+    </div>
+    <div class="iq" id="iq">IQ: 1000</div>
+    <div class="effects" id="effects"></div>
+  </div>
+
+  <div id="swipeHint">▼ СВАЙПАЙ ▼</div>
+  <div id="dementiaCounter">🌀 0</div>
+
+  <script src="main.js"></script>
+</body>
+</html>
